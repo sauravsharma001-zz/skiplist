@@ -74,9 +74,7 @@ public class SkipList<T extends Comparable<? super T>> {
             tail.prev = newEntry;
             newEntry.prev = head;
         }
-        System.out.println(x + " : "  + lev);
         this.size++;
-        printLastArray();
         return true;
     }
 
@@ -86,10 +84,10 @@ public class SkipList<T extends Comparable<? super T>> {
      * @param x Element to search
      */
     public void find(T x) {
-        last = new Entry[this.maxLevel];
+        last = new Entry[this.PossibleLevels];
         if(this.size > 0) {
             Entry temp = this.head;
-            for(int i = this.maxLevel-1; i >= 0 && temp != null; i--) {
+            for(int i = this.PossibleLevels-1; i >= 0 && temp != null; i--) {
                 while(temp.next[i].getElement() != null && temp.next[i].compareTo(x) < 0) {
                     temp = temp.next[i];
                 }
@@ -208,6 +206,7 @@ public class SkipList<T extends Comparable<? super T>> {
      */
     private int chooseLevel() {
         int level = 1 + Integer.numberOfTrailingZeros(random.nextInt());
+        if(level > PossibleLevels) level = PossibleLevels;
         if (level > maxLevel) maxLevel = level;
         return level;
     }
@@ -226,106 +225,91 @@ public class SkipList<T extends Comparable<? super T>> {
         System.out.print("Last Array: ");
         for(Entry a : this.last) {
             if(a != null)
-                System.out.println(a.getElement() + "  ");
+                System.out.print(a.getElement() + "  ");
+            else
+                System.out.print("null  ");
         }
         System.out.println();
     }
 
     public static void main(String[] args) throws Exception {
 
+        Scanner sc;
+        if (args.length > 0) {
+            File file = new File(args[0]);
+            sc = new Scanner(file);
+        } else {
+            sc = new Scanner(System.in);
+        }
+        String operation = "";
+        long operand = 0;
+        int modValue = 999983;
+        long result = 0;
+        Long returnValue = null;
+        SkipList<Long> skipList = new SkipList<>();
+        // Initialize the timer
+        Timer timer = new Timer();
+        while (!((operation = sc.next()).equals("End"))) {
+            switch (operation) {
+                case "Add": {
+                    operand = sc.nextLong();
+                    skipList.printSkiplist();
+                    break;
+                }
+                case "Ceiling": {
+                    operand = sc.nextLong();
+                    returnValue = skipList.ceiling(operand);
+                    if (returnValue != null) {
+                        result = (result + returnValue) % modValue;
+                    }
+                    break;
+                }
+                case "First": {
+                    System.out.println(skipList.first());
+                    break;
+                }
+                case "Get": {
+                    int intOperand = sc.nextInt();
+                    returnValue = skipList.get(intOperand);
+                    if (returnValue != null) {
+                        result = (result + returnValue) % modValue;
+                    }
+                    break;
+                }
+                case "Last": {
+                    System.out.println(skipList.last());
+                    break;
+                }
+                case "Floor": {
+                    operand = sc.nextLong();
+                    returnValue = skipList.floor(operand);
+                    if (returnValue != null) {
+                        result = (result + returnValue) % modValue;
+                    }
+                    break;
+                }
+                case "Remove": {
+                    operand = sc.nextLong();
+                    System.out.print(skipList.remove(operand) != null);
+                    skipList.printSkiplist();
+                    break;
+                }
+                case "Contains":{
+                    operand = sc.nextLong();
+                    System.out.print(skipList.contains(operand));
+                    skipList.printSkiplist();
+                    break;
+                }
+                case "Size": {
+                    skipList.printSkiplist();
+                }
+            }
+        }
 
-        SkipList<Integer> sk = new SkipList<>();
-        sk.add(1);
-        sk.add(7);
-        sk.add(9);
-        sk.add(3);
-        sk.add(13);
-        sk.add(11);
-        sk.add(15);
-        sk.add(5);
-        sk.add(21);
-        sk.add(29);
-        sk.add(39);
-        sk.add(31);
-        sk.add(17);
+        // End Time
+        timer.end();
 
-//        Scanner sc;
-//        if (args.length > 0) {
-//            File file = new File(args[0]);
-//            sc = new Scanner(file);
-//        } else {
-//            sc = new Scanner(System.in);
-//        }
-//        String operation = "";
-//        long operand = 0;
-//        int modValue = 999983;
-//        long result = 0;
-//        Long returnValue = null;
-//        SkipList<Long> skipList = new SkipList<>();
-//        // Initialize the timer
-//        Timer timer = new Timer();
-//        while (!((operation = sc.next()).equals("End"))) {
-//            switch (operation) {
-//                case "Add": {
-//                    operand = sc.nextLong();
-//                    skipList.printSkiplist();
-//                    break;
-//                }
-//                case "Ceiling": {
-//                    operand = sc.nextLong();
-//                    returnValue = skipList.ceiling(operand);
-//                    if (returnValue != null) {
-//                        result = (result + returnValue) % modValue;
-//                    }
-//                    break;
-//                }
-//                case "First": {
-//                    System.out.println(skipList.first());
-//                    break;
-//                }
-//                case "Get": {
-//                    int intOperand = sc.nextInt();
-//                    returnValue = skipList.get(intOperand);
-//                    if (returnValue != null) {
-//                        result = (result + returnValue) % modValue;
-//                    }
-//                    break;
-//                }
-//                case "Last": {
-//                    System.out.println(skipList.last());
-//                    break;
-//                }
-//                case "Floor": {
-//                    operand = sc.nextLong();
-//                    returnValue = skipList.floor(operand);
-//                    if (returnValue != null) {
-//                        result = (result + returnValue) % modValue;
-//                    }
-//                    break;
-//                }
-//                case "Remove": {
-//                    operand = sc.nextLong();
-//                    System.out.print(skipList.remove(operand) != null);
-//                    skipList.printSkiplist();
-//                    break;
-//                }
-//                case "Contains":{
-//                    operand = sc.nextLong();
-//                    System.out.print(skipList.contains(operand));
-//                    skipList.printSkiplist();
-//                    break;
-//                }
-//                case "Size": {
-//                    skipList.printSkiplist();
-////                    System.out.println("Size: " + skipList.size());
-//                }
-//            }
-//        }
-//
-//        // End Time
-//        timer.end();
-//
-//        System.out.println(result);
-//        System.out.println(timer);
+        System.out.println(result);
+        System.out.println(timer);
     }
 }
