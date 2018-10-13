@@ -98,7 +98,9 @@ public class SkipList<T extends Comparable<? super T>> {
 
     // Find smallest element that is greater or equal to x
     public T ceiling(T x) {
-        return null;
+        if(this.size == 0) return null;
+        if(contains(x)) return (T) last[0].next[0].getElement();
+        return (T) last[0].next[0].getElement();
     }
 
     /**
@@ -125,7 +127,9 @@ public class SkipList<T extends Comparable<? super T>> {
 
     // Find largest element that is less than or equal to x
     public T floor(T x) {
-        return null;
+        if(this.size == 0) return null;
+        if(contains(x)) return (T) last[0].next[0].getElement();
+        return (T) last[0].getElement();
     }
 
     // Return element at index n of list.  First element is at index 0.
