@@ -4,6 +4,7 @@ package sxs179830;
 
 import java.io.File;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -162,10 +163,32 @@ public class SkipList<T extends Comparable<? super T>> {
         return this.size == 0;
     }
 
-    // Iterate through the elements of list in sorted order
+    /**
+     * Iterate through the elements of list in sorted order
+     * @return
+     */
     public Iterator<T> iterator() {
 
-        return null;
+        Iterator<T> it = new Iterator<T>() {
+            Entry cursor = head;
+
+            @Override
+            public boolean hasNext() {
+                return cursor.next[0].getElement() != null;
+            }
+
+            @Override
+            public T next() {
+                if(this.hasNext()) {
+                    cursor = cursor.next[0];
+                    return (T) cursor.getElement();
+                }
+                else {
+                    throw new NoSuchElementException();
+                }
+            }
+        };
+        return it;
     }
 
     /**
