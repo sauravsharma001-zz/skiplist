@@ -134,12 +134,18 @@ public class SkipList<T extends Comparable<? super T>> {
 
     // Return element at index n of list.  First element is at index 0.
     public T get(int n) {
-        return null;
+        return getLinear(n);
     }
 
     // O(n) algorithm for get(n)
     public T getLinear(int n) {
-        return null;
+        if(n >= this.size || n < 0) return null;
+        Entry a = head.next[0];
+        for(int i = 0; i < n; i++) {
+            System.out.print(a.getElement() + "  ");
+            a = a.next[0];
+        }
+        return (T) a.getElement();
     }
 
     // Optional operation: Eligible for EC.
@@ -158,6 +164,7 @@ public class SkipList<T extends Comparable<? super T>> {
 
     // Iterate through the elements of list in sorted order
     public Iterator<T> iterator() {
+
         return null;
     }
 
@@ -257,6 +264,7 @@ public class SkipList<T extends Comparable<? super T>> {
             switch (operation) {
                 case "Add": {
                     operand = sc.nextLong();
+                    skipList.add(operand);
                     skipList.printSkiplist();
                     break;
                 }
