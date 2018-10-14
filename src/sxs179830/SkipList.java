@@ -111,7 +111,7 @@ public class SkipList<T extends Comparable<? super T>> {
      */
     public boolean contains(T x) {
         find(x);
-        return last[0] != null && last[0].next[0] != null && last[0].next[0].getElement() == x;
+        return last[0] != null && last[0].next[0] != null && last[0].next[0].getElement() != null && last[0].next[0].getElement().equals(x);
     }
 
     /**
