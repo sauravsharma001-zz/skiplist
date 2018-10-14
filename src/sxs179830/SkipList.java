@@ -1,4 +1,10 @@
-/* Starter code for LP2 */
+/**
+ * @author Saurav Sharma (sxs179830)
+ * @author Sudeep Maity (sdm170530)
+ * @author Shiva Prasad Reddy Bitla (sxb180066)
+ *
+ *  Project: Implementation of Skip List
+ **/
 
 package sxs179830;
 
@@ -8,7 +14,6 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Scanner;
 
-// Skeleton for skip list implementation.
 public class SkipList<T extends Comparable<? super T>> {
 
     private static final int PossibleLevels = 33;
@@ -97,7 +102,11 @@ public class SkipList<T extends Comparable<? super T>> {
         }
     }
 
-    // Find smallest element that is greater or equal to x
+    /**
+     * Find smallest element that is greater or equal to x
+     * @param x Element to be searched
+     * @return smallest element that is greater or equal to x
+     */
     public T ceiling(T x) {
         if(this.size == 0) return null;
         if(contains(x)) return (T) last[0].next[0].getElement();
@@ -126,7 +135,11 @@ public class SkipList<T extends Comparable<? super T>> {
         }
     }
 
-    // Find largest element that is less than or equal to x
+    /**
+     * Find largest element that is less than or equal to x
+     * @param x Element to be searched
+     * @return largest element that is less than or equal to x
+     */
     public T floor(T x) {
         if(this.size == 0) return null;
         if(contains(x)) return (T) last[0].next[0].getElement();
@@ -320,6 +333,7 @@ public class SkipList<T extends Comparable<? super T>> {
                     returnValue = skipList.floor(operand);
                     if (returnValue != null) {
                         result = (result + returnValue) % modValue;
+                        System.out.println(result);
                     }
                     break;
                 }
