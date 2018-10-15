@@ -156,7 +156,6 @@ public class SkipList<T extends Comparable<? super T>> {
         if(n >= this.size || n < 0) return null;
         Entry a = head.next[0];
         for(int i = 0; i < n; i++) {
-            System.out.print(a.getElement() + "  ");
             a = a.next[0];
         }
         return (T) a.getElement();
@@ -219,6 +218,7 @@ public class SkipList<T extends Comparable<? super T>> {
     // Optional operation: Reorganize the elements of the list into a perfect skip list
     // Not a standard operation in skip lists. Eligible for EC.
     public void rebuild() {
+        int size = this.size();
 
     }
 
